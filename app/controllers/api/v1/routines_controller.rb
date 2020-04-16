@@ -15,7 +15,7 @@ class Api::V1::RoutinesController < ApplicationController
 
     def create
         routine = Routine.create(routine_params)
-        if rountine.valid?
+        if routine.valid?
             render json: routine
         else
             render json: {message: routine.errors.full_message}
@@ -23,7 +23,7 @@ class Api::V1::RoutinesController < ApplicationController
     end
 
     def edit
-        rountine = Routine.find(params[:id])
+        routine = Routine.find(params[:id])
     end
 
     def update
@@ -36,7 +36,7 @@ class Api::V1::RoutinesController < ApplicationController
     end
 
     def destroy
-        routine = Rountine.find(params[:id])
+        routine = Routine.find(params[:id])
         routine.destroy
         render json: {message: 'Routine has been deleted'}
     end
