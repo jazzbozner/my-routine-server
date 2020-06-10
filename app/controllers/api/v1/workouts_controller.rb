@@ -1,49 +1,38 @@
 class Api::V1::WorkoutsController < ApplicationController
     def index
-        workouts = Workout.all
-        render json: workouts
+        @workouts = Workout.all
+        render json: @workouts
     end
 
     def show
-        workout = workout.find(params[:id])
-        render json: workout
-    end
-
-    def new
-        workout = workout.new
+        @workout = Workout.find(params[:id])
+        render json: @workout
     end
 
     def create
-        workout = workout.create(workout_params)
-        if rountine.valid?
-            render json: workout
+        @workout = Workout.create(workout_params)
+        if @workout.valid?
+            render json: @workout
         else
-            render json: {message: workout.errors.full_message}
+            render json: {message: @workout.errors.full_message}
         end
-    end
-
-    def edit
-        rountine = workout.find(params[:id])
     end
 
     def update
-        workout = workout.find(params[:id])
-        if workout.valid?
-            workout.update(workout_params)
-        else
-            render json: {message: workout.errors.full_message}
-        end
+        @workout = Workout.find(params[:id])
+        @workout.update(workout_params)
+        render json: @workout
     end
 
     def destroy
-        workout = Rountine.find(params[:id])
-        workout.destroy
+        @workout = Workout.find(params[:id])
+        @workout.destroy
         render json: {message: 'Workout has been deleted'}
     end
 
     private
 
-    def workout
-        params.require(:routine).permit(:routine_id, :exercise_id)
+    def workout_params
+        params.require(:workout).permit(:id, :routine_id, :exercise_id, :exercise_name, :reps, :sets, :weight)
     end
 end

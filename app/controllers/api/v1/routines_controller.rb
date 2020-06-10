@@ -1,43 +1,36 @@
 class Api::V1::RoutinesController < ApplicationController
     def index
-        routines = Routine.all
-        render json: routines
+        @routines = Routine.all
+        render json: @routines
     end
 
     def show
-        routine = Routine.find(params[:id])
-        render json: routine
-    end
-
-    def new
-        routine = Routine.new
+        @routine = Routine.find(params[:id])
+        render json: @routine
     end
 
     def create
-        routine = Routine.create(routine_params)
-        if routine.valid?
-            render json: routine
+        @routine = Routine.create(routine_params)
+        if @routine.valid?
+            render json: @routine
         else
-            render json: {message: routine.errors.full_message}
+            render json: {message: @routine.errors.full_message}
         end
     end
 
-    def edit
-        routine = Routine.find(params[:id])
-    end
-
     def update
-        routine = Routine.find(params[:id])
-        if routine.valid?
-            routine.update(routine_params)
+        @routine = Routine.find(params[:id])
+        if @routine.valid?
+            @routine.update(routine_params)
+            render json: @routine
         else
-            render json: {message: routine.errors.full_message}
+            render json: {message: @routine.errors.full_message}
         end
     end
 
     def destroy
-        routine = Routine.find(params[:id])
-        routine.destroy
+        @routine = Routine.find(params[:id])
+        @routine.destroy
         render json: {message: 'Routine has been deleted'}
     end
 
