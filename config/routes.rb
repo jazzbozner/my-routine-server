@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         resources :workouts
       end
       resources :exercises
+      resources :routines
       post '/login', to: 'auth#login'
       get '/user_authorized', to: 'auth#user_authorized'
     end

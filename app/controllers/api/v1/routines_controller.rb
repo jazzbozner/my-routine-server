@@ -11,9 +11,10 @@ class Api::V1::RoutinesController < ApplicationController
 
     def create
         byebug
-        @routine = Routine.create(routine_params)
+        # @routine = Routine.create(params[:name, :description, :intensity, :user_id])
+        # params['exercises_attributes'].foreach{ |exercise| @workout.create(:routine_id, exercise_id: exercise.id)}
+
         if @routine.valid?
-            # then create the association routine.exercise
             render json: @routine
         else
             render json: {message: @routine.errors.full_message}
@@ -39,6 +40,6 @@ class Api::V1::RoutinesController < ApplicationController
     private
 
     def routine_params
-        params.require(:routine).permit(:id, :name, :intensity, :description, :user_id, { :selected_exercises => [:id, :name, :muscle_target, :description] })
+        params.require(:routine).permit(:id, :name, :intensity, :description, :user_id, exercises_attributes: [:id, :name, :muscle_target, :description])
     end
 end
