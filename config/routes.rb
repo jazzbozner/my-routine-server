@@ -2,13 +2,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users do
-        resources :routines
+        resources :routines 
         resources :workouts
       end
       resources :exercises
-      resources :routines
-      post '/login', to: 'auth#login'
-      get '/user_authorized', to: 'auth#user_authorized'
+      # post '/login', to: 'auth#login'
+      # get '/user_authorized', to: 'auth#user_authorized'
     end
   end
 end
