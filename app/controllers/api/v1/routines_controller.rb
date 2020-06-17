@@ -10,11 +10,11 @@ class Api::V1::RoutinesController < ApplicationController
     end
 
     def create
-        byebug
-        # @routine = Routine.create(params[:name, :description, :intensity, :user_id])
-        # params['exercises_attributes'].foreach{ |exercise| @workout.create(:routine_id, exercise_id: exercise.id)}
-
-        if @routine.valid?
+        @routine = Routine.create(name: params['name'], intensity: params['intensity'], user_id: params['user_id'], description: params['description'])
+            routine_params['exercises_attributes'].each do |exercise| 
+                Workout.create(routine_id: @routine.id, exercise_id: exercise[:id], exercise_name: exercise[:name], reps: 0, sets: 0, weight: 0) 
+            end
+        if @routine.save
             render json: @routine
         else
             render json: {message: @routine.errors.full_message}
